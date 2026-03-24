@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+        "type": "string",
+        "metadata": {
+        "description": "The name of the storage account to create."
+      }
+    }, 
+        "storageSKU":{
+            "type":"string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                 "Premium_LRS"
+            ],
+            "defaultValue": "Premium_LRS",
+            "metadata": {
+                "description": "The type of replication to use for the storage account."
+            }
+        }
+},
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2025-06-01",
+            "name": "[parameters('storageAccountName')]",
+            "location": "eastus",
+            "sku": {
+                "name": "[parameters('storageSKU')]"
+            },
+            "kind": "StorageV2",
+            "properties": {}
+        }
+    ],
+    "outputs": {
+    "storageAccountName": {
+        "type": "string",
+        "value": "[parameters('storageAccountName')]"
+    }
+    }
+}
